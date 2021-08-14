@@ -107,4 +107,4 @@ if __name__ == "__main__":
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
     frame_count = str(sys.argv[4])
-  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count])
+  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count)
