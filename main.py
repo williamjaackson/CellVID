@@ -42,15 +42,14 @@ class CellVid:
         for x in range(frame_image.width):
           pixel = frame_image.getpixel((x, y))
 
-          p1_sum = p1[0] + p1[1] + p1[2]
-          p2_sum = p2[0] + p2[1] + p2[2]
-          if p1_sum >= p2_sum:
-            diff = p1_sum-p2_sum
-          else:
-            diff = p2_sum-p1_sum
-
           best_match = [1000*1000, self.cells_path + "BGDefault.png"]
           for cell in [(88, 88, 88, self.cells_path + "immobile.png"), (48, 48, 48, self.cells_path + "BGDefault.png"), (1, 203, 182, self.cells_pat + "CCWspinner_alt.png"), (255, 104, 2, self.cells_pat + "CWspinner_alt.png"), (208, 12, 33, self.cells_pat + "enemy.png"), (3, 205, 113, self.cells_pat + "generator.png"), (68, 110, 185, self.cells_pat + "mover.png"), (227, 164, 40, self.cells_pat + "slide.png"), (210, 158, 94, self.cells_pat + "push.png"), (155, 0, 206, self.cells_pat + "trash.png")]:
+            p1_sum = pixel[0] + pixel[1] + pixel[2]
+            p2_sum = cell[0] + cell[1] + cell[2]
+            if p1_sum >= p2_sum:
+              diff = p1_sum-p2_sum
+            else:
+              diff = p2_sum-p1_sum
             if diff < best_match[0]:
               best_match = [diff, cell[3]]
 
