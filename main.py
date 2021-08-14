@@ -60,7 +60,7 @@ class CellVid:
           cell_img = Image.open(closest_cell)
           output_image.paste(cell_img, (x*16, y*16))
       
-      output_image.save(self.out_path + f"frame{frame}.png", "PNG")
+      output_image.save(self.out_path + f"frame{i}.png", "PNG")
 
       print(f"Frame Rendered: frame{i}.png")
   
