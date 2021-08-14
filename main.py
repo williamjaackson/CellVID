@@ -75,7 +75,7 @@ class CellVid:
     output_image.save(self.out_path + f"frame{i}.png", "PNG")
   def render(self, size=128):
     for i, frame in enumerate(os.listdir(self.frames_path)):
-      threading.Thread(target=self.render_frame, args=(i)).start()
+      threading.Thread(target=self.render_frame, args=[i]).start()
       print(f"Frame Rendered: frame{i}.png")
   
   def make_video(self):
