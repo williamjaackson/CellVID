@@ -5,10 +5,12 @@ import sys
 import cv2
 
 class CellVid:
-  def __init__(self, video_path, frame_rate, frame_steps):
+  def __init__(self, video_path, frame_rate, frame_steps, frame_count=None):
     self.video_path = video_path
     self.frame_rate = frame_rate
     self.frame_steps = frame_steps
+
+    self.frame_count = frame_count
     
     self.path = os.path.dirname(os.path.realpath(__file__))
 
@@ -26,8 +28,8 @@ class CellVid:
         cv2.imwrite(self.frames_path + f"frame{count}.png", image)
         if success: print(f"Frame Exported: frame{count}.png")
       success,image = self.vidcap.read()
-      #if count >= amount and amount:
-      #  break
+      if self.frame_count and count >= self.frame_count:
+        break
       count += 1
   
   def render(self, size=128):
@@ -84,7 +86,7 @@ class CellVid:
 
 if __name__ == "__main__":
   if len(sys.argv) <= 1:
-    raise SyntaxError("python3 main.py <video_path> <frame_rate=24> <frame_steps=1>")
+    raise SyntaxError("python3 main.py <video_path> <frame_rate=24> <frame_steps=1>, <frame_range=0;-1>")
   elif len(sys.argv) == 2:
     video_path = sys.argv[1]
     frame_rate = 24
@@ -97,4 +99,9 @@ if __name__ == "__main__":
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
-  cellvid = CellVid(video_path, frame_rate, frame_steps)
+  elif len(sys.argv) == 5:
+    video_path = sys.argv[1]
+    frame_rate = int(sys.argv[2])
+    frame_steps = int(sys.argv[3])
+    frame_range = str(sys.argv[4])
+  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_range)
