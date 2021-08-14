@@ -21,6 +21,14 @@ class CellVid:
 
     self.main()
   
+  def sort_images(self):
+    li = []
+    for i in range(len(os.listdir(out_path))+1):
+      for img in os.listdir(out_path):
+        if str(img) == f"frame{i}.png":
+          li.append(img)
+    return li
+
   def make_frames(self, count=0):
     success,image = self.vidcap.read()
     while success:
@@ -66,7 +74,7 @@ class CellVid:
       print(f"Frame Rendered: frame{i}.png")
   
   def make_video(self):
-    images = sort_images()
+    images = self.sort_images()
     frame = cv2.imread(os.path.join(self.out_path, images[0]))
     height, width, layers = frame.shape
 
