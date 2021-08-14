@@ -59,8 +59,7 @@ def make_frame(frame, size=128):
 def main():
   for i, frame in enumerate(os.listdir(frames_path)):
     make_frame(i)
-
-print(path)
+    print(f"Frame Rendered: frame{i}.png")
 
 def sort_images():
   li = []
@@ -69,6 +68,10 @@ def sort_images():
       if str(img) == f"frame{i}.png":
         li.append(img)
   return li
+
+make_frames()
+
+main()
 
 images = sort_images()
 frame = cv2.imread(os.path.join(out_path, images[0]))
