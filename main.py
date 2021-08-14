@@ -5,21 +5,24 @@ import sys
 import cv2
 
 class CellVid:
-  def __init__(self, video_path, frame_rate, frame_steps, frame_count=0):
+  def __init__(self, video_path, frame_rate, frame_steps, frame_count, step):
     self.video_path = video_path
-    self.frame_rate = frame_rate
     self.frame_steps = frame_steps
-
     self.frame_count = int(frame_count)
     
     self.path = os.path.dirname(os.path.realpath(__file__))
 
     self.vidcap = cv2.VideoCapture(video_path)
+
+    self.frame_rate = frame_rate
+    if frame_rate == 0:
+      self.frame_rate = self.vidcap.get(cv2.CAP_PROP_FPS)
+
     self.frames_path = self.path + "/frames/"
     self.cells_path = self.path + "/cells/"
     self.out_path = self.path + "/out/"
 
-    self.main()
+    self.main(step)
   
   def sort_images(self):
     li = []
@@ -87,10 +90,17 @@ class CellVid:
     cv2.destroyAllWindows()
     video.release()
   
-  def main(self):
-    self.make_frames()
-    self.render()
-    self.make_video()
+  def main(self, s):
+    if s == "frames":
+      self.make_frames()
+    elif s == "render":
+      self.render()
+    elif s == "export":
+      self.make_video()
+    else:
+      self.make_frames()
+      self.render()
+      self.make_video()
   
 
 if __name__ == "__main__":
@@ -98,22 +108,32 @@ if __name__ == "__main__":
     raise SyntaxError("python3 main.py <video_path> <frame_rate=24> <frame_steps=1>, <frame_count=0;-1>")
   elif len(sys.argv) == 2:
     video_path = sys.argv[1]
-    frame_rate = 24
+    frame_rate = 0
     frame_steps = 1
     frame_count = 0
+    step = 0
   elif len(sys.argv) == 3:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = 1
     frame_count = 0
+    step = 0
   elif len(sys.argv) == 4:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
     frame_count = 0
+    step = 0
   elif len(sys.argv) == 5:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
     frame_count = int(sys.argv[4])-1
-  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count)
+    step = 0
+  elif len(sys.argv) == 6:
+    video_path = sys.argv[1]
+    frame_rate = int(sys.argv[2])
+    frame_steps = int(sys.argv[3])
+    frame_count = int(sys.argv[4])-1
+    step = sys.argv[5]
+  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count, step)
