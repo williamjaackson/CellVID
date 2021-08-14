@@ -46,33 +46,33 @@ class CellVid:
   
   def render_frame(i):
     if i+1 == len(os.listdir(self.frames_path)):
-        return
-      frame_image = Image.open(self.frames_path + f"frame{i}.png")
-      frame_image = frame_image.resize((int(size * frame_image.width / frame_image.height), size), Image.ANTIALIAS)
+      return
+    frame_image = Image.open(self.frames_path + f"frame{i}.png")
+    frame_image = frame_image.resize((int(size * frame_image.width / frame_image.height), size), Image.ANTIALIAS)
 
-      output_image = Image.new("RGBA", (round(size * frame_image.width / frame_image.height * 16), size * 16), (42, 42, 42, 255))
+    output_image = Image.new("RGBA", (round(size * frame_image.width / frame_image.height * 16), size * 16), (42, 42, 42, 255))
 
-      for y in range(frame_image.height):
-        for x in range(frame_image.width):
-          pixel = frame_image.getpixel((x, y))
+    for y in range(frame_image.height):
+      for x in range(frame_image.width):
+        pixel = frame_image.getpixel((x, y))
 
-          best_match = [1000*1000, self.cells_path + "BGDefault.png"]
-          for cell in [(88, 88, 88, self.cells_path + "immobile.png"), (48, 48, 48, self.cells_path + "BGDefault.png"), (1, 203, 182, self.cells_path + "CCWspinner_alt.png"), (255, 104, 2, self.cells_path + "CWspinner_alt.png"), (208, 12, 33, self.cells_path + "enemy.png"), (3, 205, 113, self.cells_path + "generator.png"), (68, 110, 185, self.cells_path + "mover.png"), (227, 164, 40, self.cells_path + "slide.png"), (210, 158, 94, self.cells_path + "push.png"), (155, 0, 206, self.cells_path + "trash.png")]:
-            p1_sum = pixel[0] + pixel[1] + pixel[2]
-            p2_sum = cell[0] + cell[1] + cell[2]
-            if p1_sum >= p2_sum:
-              diff = p1_sum-p2_sum
-            else:
-              diff = p2_sum-p1_sum
-            if diff < best_match[0]:
-              best_match = [diff, cell[3]]
+        best_match = [1000*1000, self.cells_path + "BGDefault.png"]
+        for cell in [(88, 88, 88, self.cells_path + "immobile.png"), (48, 48, 48, self.cells_path + "BGDefault.png"), (1, 203, 182, self.cells_path + "CCWspinner_alt.png"), (255, 104, 2, self.cells_path + "CWspinner_alt.png"), (208, 12, 33, self.cells_path + "enemy.png"), (3, 205, 113, self.cells_path + "generator.png"), (68, 110, 185, self.cells_path + "mover.png"), (227, 164, 40, self.cells_path + "slide.png"), (210, 158, 94, self.cells_path + "push.png"), (155, 0, 206, self.cells_path + "trash.png")]:
+          p1_sum = pixel[0] + pixel[1] + pixel[2]
+          p2_sum = cell[0] + cell[1] + cell[2]
+          if p1_sum >= p2_sum:
+            diff = p1_sum-p2_sum
+          else:
+            diff = p2_sum-p1_sum
+          if diff < best_match[0]:
+            best_match = [diff, cell[3]]
 
-          closest_cell = best_match[1]
+        closest_cell = best_match[1]
 
-          cell_img = Image.open(closest_cell)
-          output_image.paste(cell_img, (x*16, y*16))
-      
-      output_image.save(self.out_path + f"frame{i}.png", "PNG")
+        cell_img = Image.open(closest_cell)
+        output_image.paste(cell_img, (x*16, y*16))
+    
+    output_image.save(self.out_path + f"frame{i}.png", "PNG")
   def render(self, size=128):
     for i, frame in enumerate(os.listdir(self.frames_path)):
       threading.Thread(target=self.render_frame, args=(i)).start()
