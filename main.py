@@ -5,12 +5,12 @@ import sys
 import cv2
 
 class CellVid:
-  def __init__(self, video_path, frame_rate, frame_steps, frame_count=None):
+  def __init__(self, video_path, frame_rate, frame_steps, frame_count=0):
     self.video_path = video_path
     self.frame_rate = frame_rate
     self.frame_steps = frame_steps
 
-    self.frame_count = frame_count
+    self.frame_count = int(frame_count)
     
     self.path = os.path.dirname(os.path.realpath(__file__))
 
@@ -91,17 +91,17 @@ if __name__ == "__main__":
     video_path = sys.argv[1]
     frame_rate = 24
     frame_steps = 1
-    frame_count = None
+    frame_count = 0
   elif len(sys.argv) == 3:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = 1
-    frame_count = None
+    frame_count = 0
   elif len(sys.argv) == 4:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
-    frame_count = None
+    frame_count = 0
   elif len(sys.argv) == 5:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
