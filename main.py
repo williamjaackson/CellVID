@@ -20,12 +20,12 @@ class CellVid:
     self.main()
   
   def make_frames(self, count=0):
-    success,image = vidcap.read()
+    success,image = self.vidcap.read()
     while success:
       if count % self.frame_steps == 0:
         cv2.imwrite(frames_path + f"frame{count}.png", image)
         if success: print(f"Frame Exported: frame{count}.png")
-      success,image = vidcap.read()
+      success,image = self.vidcap.read()
       if count >= amount and amount:
         break
       count += 1
