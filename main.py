@@ -34,7 +34,7 @@ class CellVid:
     for i, frame in enumerate(os.listdir(self.frames_path)):
 
       print(self.frames_path)      
-      frame_image = Image.open(self.frames_path + f"frame{frame}.png")
+      frame_image = Image.open(self.frames_path + f"frame{i}.png")
       frame_image = frame_image.resize((int(size * frame_image.width / frame_image.height), size), Image.ANTIALIAS)
 
       output_image = Image.new("RGBA", (round(size * frame_image.width / frame_image.height * 16), size * 16), (42, 42, 42, 255))
