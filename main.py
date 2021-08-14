@@ -86,22 +86,25 @@ class CellVid:
 
 if __name__ == "__main__":
   if len(sys.argv) <= 1:
-    raise SyntaxError("python3 main.py <video_path> <frame_rate=24> <frame_steps=1>, <frame_range=0;-1>")
+    raise SyntaxError("python3 main.py <video_path> <frame_rate=24> <frame_steps=1>, <frame_count=0;-1>")
   elif len(sys.argv) == 2:
     video_path = sys.argv[1]
     frame_rate = 24
     frame_steps = 1
+    frame_count = None
   elif len(sys.argv) == 3:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = 1
+    frame_count = None
   elif len(sys.argv) == 4:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
+    frame_count = None
   elif len(sys.argv) == 5:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
-    frame_range = str(sys.argv[4])
-  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_range)
+    frame_count = str(sys.argv[4])
+  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count])
