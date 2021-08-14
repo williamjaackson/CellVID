@@ -16,6 +16,8 @@ class CellVid:
     self.frames_path = self.path + "/frames/"
     self.cells_path = self.path + "/cells/"
     self.out_path = self.path + "/out/"
+
+    self.main()
   
   def make_frames(self, count=0):
     success,image = vidcap.read()
