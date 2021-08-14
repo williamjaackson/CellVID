@@ -43,7 +43,7 @@ class CellVid:
           pixel = frame_image.getpixel((x, y))
 
           best_match = [1000*1000, self.cells_path + "BGDefault.png"]
-          for cell in [(88, 88, 88, self.cells_path + "immobile.png"), (48, 48, 48, self.cells_path + "BGDefault.png"), (1, 203, 182, self.cells_pat + "CCWspinner_alt.png"), (255, 104, 2, self.cells_pat + "CWspinner_alt.png"), (208, 12, 33, self.cells_pat + "enemy.png"), (3, 205, 113, self.cells_pat + "generator.png"), (68, 110, 185, self.cells_pat + "mover.png"), (227, 164, 40, self.cells_pat + "slide.png"), (210, 158, 94, self.cells_pat + "push.png"), (155, 0, 206, self.cells_pat + "trash.png")]:
+          for cell in [(88, 88, 88, self.cells_path + "immobile.png"), (48, 48, 48, self.cells_path + "BGDefault.png"), (1, 203, 182, self.cells_path + "CCWspinner_alt.png"), (255, 104, 2, self.cells_path + "CWspinner_alt.png"), (208, 12, 33, self.cells_path + "enemy.png"), (3, 205, 113, self.cells_path + "generator.png"), (68, 110, 185, self.cells_path + "mover.png"), (227, 164, 40, self.cells_path + "slide.png"), (210, 158, 94, self.cells_path + "push.png"), (155, 0, 206, self.cells_path + "trash.png")]:
             p1_sum = pixel[0] + pixel[1] + pixel[2]
             p2_sum = cell[0] + cell[1] + cell[2]
             if p1_sum >= p2_sum:
