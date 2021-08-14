@@ -36,6 +36,7 @@ class CellVid:
     for i, frame in enumerate(os.listdir(self.frames_path)):
       if i-1 == len(os.listdir(self.frames_path)):
         return
+      print(i)
       frame_image = Image.open(self.frames_path + f"frame{i}.png")
       frame_image = frame_image.resize((int(size * frame_image.width / frame_image.height), size), Image.ANTIALIAS)
 
