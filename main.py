@@ -75,6 +75,11 @@ class CellVid:
     cv2.destroyAllWindows()
     video.release()
   
+  def main(self):
+    self.make_frames()
+    self.render()
+    self.make_video()
+  
 
 if __name__ == "__main__":
   if len(sys.argv) <= 1:
