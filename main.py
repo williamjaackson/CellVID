@@ -3,6 +3,7 @@ from PIL import Image, ImageOps
 import os
 import sys
 import cv2
+import threading
 
 class CellVid:
   def __init__(self, video_path, frame_rate, frame_steps, frame_count, step):
@@ -43,9 +44,8 @@ class CellVid:
         break
       count += 1
   
-  def render(self, size=128):
-    for i, frame in enumerate(os.listdir(self.frames_path)):
-      if i+1 == len(os.listdir(self.frames_path)):
+  def render_frame(i)
+    if i+1 == len(os.listdir(self.frames_path)):
         return
       frame_image = Image.open(self.frames_path + f"frame{i}.png")
       frame_image = frame_image.resize((int(size * frame_image.width / frame_image.height), size), Image.ANTIALIAS)
@@ -73,7 +73,9 @@ class CellVid:
           output_image.paste(cell_img, (x*16, y*16))
       
       output_image.save(self.out_path + f"frame{i}.png", "PNG")
-
+  def render(self, size=128):
+    for i, frame in enumerate(os.listdir(self.frames_path)):
+      threading.Thread(target=self.render_frame, args=(i)).start()
       print(f"Frame Rendered: frame{i}.png")
   
   def make_video(self):
