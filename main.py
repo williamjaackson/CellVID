@@ -23,8 +23,8 @@ class CellVid:
   
   def sort_images(self):
     li = []
-    for i in range(len(os.listdir(out_path))+1):
-      for img in os.listdir(out_path):
+    for i in range(len(os.listdir(self.out_path))+1):
+      for img in os.listdir(self.out_path):
         if str(img) == f"frame{i}.png":
           li.append(img)
     return li
