@@ -71,7 +71,8 @@ class CellVid:
         closest_cell = best_match[1]
 
         cell_img = Image.open(closest_cell)
-        print(f"paste, frame{i}")
+        if i == 0:
+          print(f"{x*y}/{size*(size * frame_image.width / frame_image.height)}"
         output_image.paste(cell_img, (x*16, y*16))
     
     output_image.save(self.out_path + f"frame{i}.png", "PNG")
