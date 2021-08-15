@@ -142,15 +142,15 @@ if __name__ == "__main__":
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
-    frame_count = int(sys.argv[4])-1
     size = 128
+    frame_count = int(sys.argv[4])-1
     step = 0
   elif len(sys.argv) == 6:
     video_path = sys.argv[1]
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
-    frame_count = int(sys.argv[4])-1
     size = int(sys.argv[5])
+    frame_count = int(sys.argv[4])-1
     step = 0
   elif len(sys.argv) == 7:
     video_path = sys.argv[1]
