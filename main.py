@@ -73,8 +73,8 @@ class CellVid:
         cell_img = Image.open(closest_cell)
         output_image.paste(cell_img, (x*16, y*16))
     
-    if i == 0:
-      print(f"{x*y}/{size*(size * frame_image.width / frame_image.height)}")
+      if i == 0:
+        print(f"{y}/{size}")
     output_image.save(self.out_path + f"frame{i}.png", "PNG")
     print(f"Frame Rendered: frame{i}.png")
   def render(self, size=128):
