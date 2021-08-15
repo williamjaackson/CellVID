@@ -70,18 +70,21 @@ class CellVid:
         closest_cell = best_match[1]
 
         cell_img = Image.open(closest_cell)
+        print(f"paste, frame{i}")
         output_image.paste(cell_img, (x*16, y*16))
     
     output_image.save(self.out_path + f"frame{i}.png", "PNG")
     print(f"Frame Rendered: frame{i}.png")
   def render(self, size=128):
     for i, frame in enumerate(os.listdir(self.frames_path)):
+      if i == len(os.listdir(self.frames_path)-1:
+        return
       print("Rendering...")
       threading.Thread(target=self.render_frame, args=[i, size]).start()
   
   def make_video(self):
-    images = self.sort_images()
-    frame = cv2.imread(os.path.join(self.out_path, images[0]))
+    self.images = self.sort_images()
+    frame = cv2.imread(os.path.join(self.out_path, self.images[0]))
     height, width, layers = frame.shape
 
     video = cv2.VideoWriter("output.mp4", cv2.VideoWriter_fourcc(*'MP4V'), self.frame_rate, (width,height))
@@ -105,6 +108,7 @@ class CellVid:
       self.render()
       while len(os.listdir(self.out_path)) != len(os.listdir(self.frames_path)):
         pass
+      time.sleep(5)
       self.make_video()
   
 
