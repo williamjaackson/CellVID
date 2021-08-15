@@ -24,7 +24,6 @@ class CellVid:
     self.cells_path = self.path + "/cells/"
     self.out_path = self.path + "/out/"
 
-    print("INIT", size)
     self.main(step, size)
   
   def sort_images(self):
@@ -47,7 +46,6 @@ class CellVid:
       count += 1
   
   def render_frame(self, i, size):
-    print("rf", size)
     if i+1 == len(os.listdir(self.frames_path)):
       return
     frame_image = Image.open(self.frames_path + f"frame{i}.png")
@@ -80,7 +78,6 @@ class CellVid:
     output_image.save(self.out_path + f"frame{i}.png", "PNG")
     print(f"Frame Rendered: frame{i}.png")
   def render(self, size=128):
-    print("r", size)
     for i, frame in enumerate(os.listdir(self.frames_path)):
       if i == len(os.listdir(self.frames_path))-1:
         return
