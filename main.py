@@ -98,7 +98,7 @@ class CellVid:
     cv2.destroyAllWindows()
     video.release()
   
-  def main(self, s):
+  def main(self, s, size):
     if s == "frames":
       self.make_frames()
     elif s == "render":
