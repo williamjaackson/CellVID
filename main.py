@@ -7,7 +7,7 @@ import threading
 import time
 
 class CellVid:
-  def __init__(self, video_path, frame_rate, frame_steps, frame_count, step):
+  def __init__(self, video_path, frame_rate, frame_steps, frame_count, size, step):
     self.video_path = video_path
     self.frame_steps = frame_steps
     self.frame_count = int(frame_count)
@@ -24,7 +24,7 @@ class CellVid:
     self.cells_path = self.path + "/cells/"
     self.out_path = self.path + "/out/"
 
-    self.main(step)
+    self.main(step, size)
   
   def sort_images(self):
     li = []
@@ -102,12 +102,12 @@ class CellVid:
     if s == "frames":
       self.make_frames()
     elif s == "render":
-      self.render()
+      self.render(size)
     elif s == "export":
       self.make_video()
     else:
       self.make_frames()
-      self.render()
+      self.render(size)
       while len(os.listdir(self.out_path)) != len(os.listdir(self.frames_path)):
         pass
       time.sleep(0.5*(len(os.listdir(self.out_path))))
@@ -146,5 +146,13 @@ if __name__ == "__main__":
     frame_rate = int(sys.argv[2])
     frame_steps = int(sys.argv[3])
     frame_count = int(sys.argv[4])-1
-    step = sys.argv[5]
-  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count, step)
+    size = int(sys.argv[5])
+    step = 0
+  elif len(sys.argv) == 7:
+    video_path = sys.argv[1]
+    frame_rate = int(sys.argv[2])
+    frame_steps = int(sys.argv[3])
+    frame_count = int(sys.argv[4])-1
+    size = int(sys.argv[5])
+    step = sys.argv[6]
+  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count, size, step)
