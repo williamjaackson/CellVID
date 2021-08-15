@@ -78,7 +78,7 @@ class CellVid:
     print(f"Frame Rendered: frame{i}.png")
   def render(self, size=128):
     for i, frame in enumerate(os.listdir(self.frames_path)):
-      if i == len(os.listdir(self.frames_path)-1:
+      if i == len(os.listdir(self.frames_path))-1:
         return
       print("Rendering...")
       threading.Thread(target=self.render_frame, args=[i, size]).start()
