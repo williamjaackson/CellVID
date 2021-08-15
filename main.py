@@ -110,7 +110,7 @@ class CellVid:
       self.render(size)
       while len(os.listdir(self.out_path)) != len(os.listdir(self.frames_path)):
         pass
-      time.sleep(0.5*(len(os.listdir(self.out_path))))
+      time.sleep(0.25*(len(os.listdir(self.out_path))))
       self.make_video()
   
 
