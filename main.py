@@ -24,6 +24,7 @@ class CellVid:
     self.cells_path = self.path + "/cells/"
     self.out_path = self.path + "/out/"
 
+    print("INIT", size)
     self.main(step, size)
   
   def sort_images(self):
