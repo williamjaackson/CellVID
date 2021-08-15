@@ -4,6 +4,7 @@ import os
 import sys
 import cv2
 import threading
+import time
 
 class CellVid:
   def __init__(self, video_path, frame_rate, frame_steps, frame_count, step):
