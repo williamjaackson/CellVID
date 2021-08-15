@@ -91,8 +91,8 @@ class CellVid:
 
     video = cv2.VideoWriter("output.mp4", cv2.VideoWriter_fourcc(*'MP4V'), self.frame_rate, (width,height))
 
-    for i, image in enumerate(images): 
-      print(f"Exporting Video: {i}/{len(images)}")
+    for i, image in enumerate(self.images): 
+      print(f"Exporting Video: {i}/{len(self.images)}")
       video.write(cv2.imread(os.path.join(self.out_path, image)))
 
     cv2.destroyAllWindows()
@@ -110,7 +110,7 @@ class CellVid:
       self.render()
       while len(os.listdir(self.out_path)) != len(os.listdir(self.frames_path)):
         pass
-      time.sleep(15)
+      time.sleep(0.5*(len(os.listdir(self.out_path))))
       self.make_video()
   
 
