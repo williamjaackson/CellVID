@@ -74,10 +74,10 @@ class CellVid:
         output_image.paste(cell_img, (x*16, y*16))
     
     output_image.save(self.out_path + f"frame{i}.png", "PNG")
+    print(f"Frame Rendered: frame{i}.png")
   def render(self, size=128):
     for i, frame in enumerate(os.listdir(self.frames_path)):
       threading.Thread(target=self.render_frame, args=([i, size])).start()
-      print(f"Frame Rendered: frame{i}.png")
   
   def make_video(self):
     images = self.sort_images()
@@ -103,6 +103,8 @@ class CellVid:
     else:
       self.make_frames()
       self.render()
+      while len(os.listdir(self.out_path)) != len(os.listdir(self.frames_path)):
+        pass
       self.make_video()
   
 
