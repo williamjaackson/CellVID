@@ -18,8 +18,8 @@ class CellVID:
 
     self.video_capture = cv2.VideoCapture(self.video_path)
 
-    self.frame_rate = frame_rate
-    if frame_rate == 0:
+    self.frame_rate = framerate
+    if framerate == 0:
       self.frame_rate = self.video_capture.get(cv2.CAP_PROP_FPS)
 
     self.size = size
