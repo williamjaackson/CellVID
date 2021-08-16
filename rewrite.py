@@ -74,7 +74,7 @@ class CellVID:
     for i, frame in enumerate(os.listdir(self.frames_path)):
       if i == len(os.listdir(self.frames_path))-1:
         return
-      while threading.activeCount() >= 10:
+      while threading.activeCount() > 10:
         pass
       print(f"Rendering frame{i}.png...")
       threading.Thread(target=self.render_frame, args=[i, self.size], daemon=True).start()
