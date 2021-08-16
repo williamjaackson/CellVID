@@ -84,11 +84,12 @@ class CellVID:
     self.render()
 
 if __name__ == "__main__":
-  elif len(sys.argv) <= 1:
+  if len(sys.argv) <= 1:
     cellvid = CellVid(sys.argv[1], sys.argv[2], sys.argv[3])
   elif len(sys.argv) <= 2:
     cellvid = CellVid(sys.argv[1], sys.argv[2])
   elif len(sys.argv) <= 3:
     cellvid = CellVid(sys.argv[1], sys.argv[2], sys.argv[3])
   else:
-    raise SyntaxError("python3 main.py <video> <framerate> <size>")
+    prin("python3 main.py <video> <framerate> <size>")
+    exit()
