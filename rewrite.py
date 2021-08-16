@@ -8,13 +8,15 @@ import cv2
 # python3 main.py <video> <framerate> <size>
 
 class CellVID:
-  def __init__(self, video_path, framerate=0, size=128):
+  def __init__(self, video_path, framerate=0, size=128, maxThreads=10):
     self.path = os.path.dirname(os.path.realpath(__file__))
 
     self.video_path = video_path
     self.frames_path = self.path + "/frames/"
     self.cells_path = self.path + "/cells/"
     self.out_path = self.path + "/out/"
+    
+    self.max_threads = maxThreads
 
     self.video_capture = cv2.VideoCapture(self.video_path)
 
@@ -74,7 +76,7 @@ class CellVID:
     for i, frame in enumerate(os.listdir(self.frames_path)):
       if i == len(os.listdir(self.frames_path))-1:
         return
-      while threading.activeCount() > 10:
+      while threading.activeCount() > self.max_threads:
         pass
       print(f"Rendering frame{i}.png...")
       threading.Thread(target=self.render_frame, args=[i, self.size], daemon=True).start()
@@ -90,6 +92,8 @@ if __name__ == "__main__":
     cellvid = CellVID(sys.argv[1], sys.argv[2])
   elif len(sys.argv) == 4:
     cellvid = CellVID(sys.argv[1], sys.argv[2], sys.argv[3])
+  elif len(sys.argv) == 5:
+    cellvid = CellVID(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
   else:
     print("python3 main.py <video> <framerate> <size>")
     exit()
