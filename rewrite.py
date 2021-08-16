@@ -96,6 +96,9 @@ if __name__ == "__main__":
     cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]))
   elif len(sys.argv) == 5:
     cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
+  elif len(sys.argv) == 6:
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
   else:
     print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
     exit()
+  time.sleep(10)
