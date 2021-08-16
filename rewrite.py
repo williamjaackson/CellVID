@@ -84,6 +84,7 @@ class CellVID:
     self.render()
 
 if __name__ == "__main__":
+  print(len(sys.argv))
   if len(sys.argv) == 1:
     cellvid = CellVID(sys.argv[1], sys.argv[2], sys.argv[3])
   elif len(sys.argv) == 2:
