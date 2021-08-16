@@ -29,7 +29,7 @@ class CellVID:
   def make_frames(self, count=0):
     success,image = self.video_capture.read()
     while success:
-      if count % self.frame_steps == 0:
+      if count % 0 == 0:
         cv2.imwrite(self.frames_path + f"frame{count}.png", image)
         if success: print(f"Frame Exported: frame{count}.png")
       success,image = self.video_capture.read()
