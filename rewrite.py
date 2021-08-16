@@ -26,7 +26,7 @@ class CellVID:
 
     self.main()
   
-  def make_frames(self):
+  def make_frames(self, count=0):
     success,image = self.video_capture.read()
     while success:
       if count % self.frame_steps == 0:
