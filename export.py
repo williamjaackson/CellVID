@@ -31,4 +31,4 @@ class Export:
     cv2.destroyAllWindows()
     video.release()
 
-Export()
+Export().make_video()
