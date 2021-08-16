@@ -87,6 +87,28 @@ class CellVID:
     self.make_frames()
     self.render()
 
+  def sort_images(self):
+    li = []
+    for i in range(len(os.listdir(self.out_path))+1):
+      for img in os.listdir(self.out_path):
+        if str(img) == f"frame{i}.png":
+          li.append(img)
+    return li
+
+  def make_video(self):
+    self.images = self.sort_images()
+    frame = cv2.imread(os.path.join(self.out_path, self.images[0]))
+    height, width, layers = frame.shape
+
+    video = cv2.VideoWriter("output.mp4", cv2.VideoWriter_fourcc(*'MP4V'), self.frame_rate, (width,height))
+
+    for i, image in enumerate(self.images): 
+      print(f"Exporting Video: {i}/{len(self.images)}")
+      video.write(cv2.imread(os.path.join(self.out_path, image)))
+
+    cv2.destroyAllWindows()
+    video.release()
+
 if __name__ == "__main__":
   if len(sys.argv) == 2:
     cellvid = CellVID(sys.argv[1])
@@ -102,3 +124,4 @@ if __name__ == "__main__":
     print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
     exit()
   time.sleep(10)
+  Export().make_video()
