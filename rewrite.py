@@ -91,11 +91,11 @@ if __name__ == "__main__":
   if len(sys.argv) == 2:
     cellvid = CellVID(sys.argv[1])
   elif len(sys.argv) == 3:
-    cellvid = CellVID(sys.argv[1], sys.argv[2])
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]))
   elif len(sys.argv) == 4:
-    cellvid = CellVID(sys.argv[1], sys.argv[2], sys.argv[3])
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]))
   elif len(sys.argv) == 5:
-    cellvid = CellVID(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
   else:
     print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
     exit()
