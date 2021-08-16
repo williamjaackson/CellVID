@@ -33,8 +33,8 @@ class CellVID:
         cv2.imwrite(self.frames_path + f"frame{count}.png", image)
         if success: print(f"Frame Exported: frame{count}.png")
       success,image = self.video_capture.read()
-      if self.frame_count and count >= self.frame_count:
-        break
+      #if self.frame_count and count >= self.frame_count:
+      #  break
       count += 1
 
   def render_frame(self):
