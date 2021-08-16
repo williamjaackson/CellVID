@@ -37,7 +37,7 @@ class CellVID:
       #  break
       count += 1
 
-  def render_frame(self):
+  def render_frame(self, i, size):
     if i+1 == len(os.listdir(self.frames_path)):
       return
     frame_image = Image.open(self.frames_path + f"frame{i}.png")
