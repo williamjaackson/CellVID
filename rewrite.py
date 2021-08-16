@@ -8,7 +8,7 @@ import cv2
 # python3 main.py <video> <framerate> <size>
 
 class CellVID:
-  def __init__(self, video_path, framerate=0, size=128, maxThreads=10):
+  def __init__(self, video_path, framerate=0, size=128, maxThreads=10, count=0):
     self.path = os.path.dirname(os.path.realpath(__file__))
 
     self.video_path = video_path
@@ -23,6 +23,8 @@ class CellVID:
     self.frame_rate = framerate
     if framerate == 0:
       self.frame_rate = self.video_capture.get(cv2.CAP_PROP_FPS)
+    
+    self.count = count
 
     self.size = size
 
@@ -35,8 +37,8 @@ class CellVID:
         cv2.imwrite(self.frames_path + f"frame{count}.png", image)
         if success: print(f"Frame Exported: frame{count}.png")
       success,image = self.video_capture.read()
-      #if self.frame_count and count >= self.frame_count:
-      #  break
+      if self.frame_count and count >= self.frame_count:
+        break
       count += 1
 
   def render_frame(self, i, size):
@@ -95,5 +97,5 @@ if __name__ == "__main__":
   elif len(sys.argv) == 5:
     cellvid = CellVID(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
   else:
-    print("python3 main.py <video> <framerate> <size>")
+    print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
     exit()
