@@ -91,5 +91,5 @@ if __name__ == "__main__":
   elif len(sys.argv) == 4:
     cellvid = CellVID(sys.argv[1], sys.argv[2], sys.argv[3])
   else:
-    prin("python3 main.py <video> <framerate> <size>")
+    print("python3 main.py <video> <framerate> <size>")
     exit()
