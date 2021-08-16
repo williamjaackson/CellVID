@@ -1,50 +1,46 @@
-# Imports
+import threading
 from PIL import Image, ImageOps
+import time
 import os
 import sys
 import cv2
-import threading
-import time
 
-class CellVid:
-  def __init__(self, video_path, frame_rate, frame_steps, frame_count, size, step):
-    self.video_path = video_path
-    self.frame_steps = frame_steps
-    self.frame_count = int(frame_count)
-    
+# python3 main.py <video> <framerate> <size>
+
+class CellVID:
+  def __init__(self, video_path, framerate=0, size=128, maxThreads=10, count=0):
     self.path = os.path.dirname(os.path.realpath(__file__))
 
-    self.vidcap = cv2.VideoCapture(video_path)
-
-    self.frame_rate = frame_rate
-    if frame_rate == 0:
-      self.frame_rate = self.vidcap.get(cv2.CAP_PROP_FPS)
-
+    self.video_path = video_path
     self.frames_path = self.path + "/frames/"
     self.cells_path = self.path + "/cells/"
     self.out_path = self.path + "/out/"
+    
+    self.max_threads = maxThreads
 
-    self.main(step, size)
+    self.video_capture = cv2.VideoCapture(self.video_path)
+
+    self.frame_rate = framerate
+    if framerate == 0:
+      self.frame_rate = self.video_capture.get(cv2.CAP_PROP_FPS)
+    
+    self.count = count
+
+    self.size = size
+
+    self.main()
   
-  def sort_images(self):
-    li = []
-    for i in range(len(os.listdir(self.out_path))+1):
-      for img in os.listdir(self.out_path):
-        if str(img) == f"frame{i}.png":
-          li.append(img)
-    return li
-
   def make_frames(self, count=0):
-    success,image = self.vidcap.read()
+    success,image = self.video_capture.read()
     while success:
-      if count % self.frame_steps == 0:
+      if count % 1 == 0:
         cv2.imwrite(self.frames_path + f"frame{count}.png", image)
         if success: print(f"Frame Exported: frame{count}.png")
-      success,image = self.vidcap.read()
-      if self.frame_count and count >= self.frame_count:
+      success,image = self.video_capture.read()
+      if self.count and count >= self.count:
         break
       count += 1
-  
+
   def render_frame(self, i, size):
     if i+1 == len(os.listdir(self.frames_path)):
       return
@@ -73,18 +69,32 @@ class CellVid:
         cell_img = Image.open(closest_cell)
         output_image.paste(cell_img, (x*16, y*16))
     
-      if i == 0:
-        print(f"{y}/{size}")
+      if i % self.max_threads == 0:
+        print(f"{y+1}/{size}")
     output_image.save(self.out_path + f"frame{i}.png", "PNG")
     print(f"Frame Rendered: frame{i}.png")
 
-  def render(self, size=128):
+  def render(self):
     for i, frame in enumerate(os.listdir(self.frames_path)):
       if i == len(os.listdir(self.frames_path))-1:
         return
-      print("Rendering...")
-      threading.Thread(target=self.render_frame, args=[i, size], daemon=True).start()
-  
+      while threading.activeCount() > self.max_threads:
+        pass
+      print(f"Rendering frame{i}.png...")
+      threading.Thread(target=self.render_frame, args=[i, self.size], daemon=True).start()
+
+  def main(self):
+    self.make_frames()
+    self.render()
+
+  def sort_images(self):
+    li = []
+    for i in range(len(os.listdir(self.out_path))+1):
+      for img in os.listdir(self.out_path):
+        if str(img) == f"frame{i}.png":
+          li.append(img)
+    return li
+
   def make_video(self):
     self.images = self.sort_images()
     frame = cv2.imread(os.path.join(self.out_path, self.images[0]))
@@ -98,66 +108,20 @@ class CellVid:
 
     cv2.destroyAllWindows()
     video.release()
-  
-  def main(self, s, size):
-    if s == "frames":
-      self.make_frames()
-    elif s == "render":
-      self.render(size)
-    elif s == "export":
-      self.make_video()
-    else:
-      self.make_frames()
-      self.render(size)
-      while len(os.listdir(self.out_path)) != len(os.listdir(self.frames_path)):
-        pass
-      time.sleep(20)
-      self.make_video()
-  
 
 if __name__ == "__main__":
-  if len(sys.argv) <= 1:
-    raise SyntaxError("python3 main.py <video_path> <frame_rate=24> <frame_steps=1> <frame_count=0> <size=128> <step=0>")
-  elif len(sys.argv) == 2:
-    video_path = sys.argv[1]
-    frame_rate = 0
-    frame_steps = 1
-    frame_count = 0
-    size = 128
-    step = 0
+  if len(sys.argv) == 2:
+    cellvid = CellVID(sys.argv[1])
   elif len(sys.argv) == 3:
-    video_path = sys.argv[1]
-    frame_rate = int(sys.argv[2])
-    frame_steps = 1
-    frame_count = 0
-    size = 128
-    step = 0
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]))
   elif len(sys.argv) == 4:
-    video_path = sys.argv[1]
-    frame_rate = int(sys.argv[2])
-    frame_steps = int(sys.argv[3])
-    frame_count = 0
-    size = 128
-    step = 0
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]))
   elif len(sys.argv) == 5:
-    video_path = sys.argv[1]
-    frame_rate = int(sys.argv[2])
-    frame_steps = int(sys.argv[3])
-    size = int(sys.argv[4])
-    frame_count = 0
-    step = 0
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
   elif len(sys.argv) == 6:
-    video_path = sys.argv[1]
-    frame_rate = int(sys.argv[2])
-    frame_steps = int(sys.argv[3])
-    size = int(sys.argv[4])
-    frame_count = int(sys.argv[5])-1
-    step = 0
-  elif len(sys.argv) == 7:
-    video_path = sys.argv[1]
-    frame_rate = int(sys.argv[2])
-    frame_steps = int(sys.argv[3])
-    size = int(sys.argv[4])
-    frame_count = int(sys.argv[5])-1
-    step = sys.argv[6]
-  cellvid = CellVid(video_path, frame_rate, frame_steps, frame_count, size, step)
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
+  else:
+    print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
+    exit()
+  time.sleep(10)
+  cellvid.make_video()
