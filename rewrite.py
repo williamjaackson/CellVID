@@ -124,4 +124,4 @@ if __name__ == "__main__":
     print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
     exit()
   time.sleep(10)
-  Export().make_video()
+  cellvid.make_video()
