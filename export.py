@@ -1,3 +1,6 @@
+import os
+import cv2
+
 class Export:
   def __init__(self):
     self.path = os.path.dirname(os.path.realpath(__file__))
