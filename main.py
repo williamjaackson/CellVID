@@ -39,7 +39,7 @@ class CellVID:
         cv2.imwrite(self.frames_path + f"frame{count}.png", image)
         if success: print(f"Frame Exported: frame{count}.png")
       success,image = self.video_capture.read()
-      if self.count and count >= self.count:
+      if self.count != 0 and count >= self.count:
         break
       count += 1
 
@@ -126,7 +126,7 @@ if __name__ == "__main__":
   elif len(sys.argv) == 7:
     cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]), int(sys.argv[6]))
   else:
-    print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
+    print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0> <start_count=0>")
     exit()
   time.sleep(10 + 0.3*(os.listdir(cellvid.out_path))
   cellvid.make_video()
