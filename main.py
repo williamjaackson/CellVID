@@ -8,7 +8,9 @@ import cv2
 # python3 main.py <video> <framerate> <size>
 
 class CellVID:
-  def __init__(self, video_path, framerate=0, size=128, maxThreads=10, count=0):
+  def __init__(self, video_path, framerate=0, size=128, maxThreads=10, count=0, start_count=0):
+    self.start_count
+    
     self.path = os.path.dirname(os.path.realpath(__file__))
 
     self.video_path = video_path
@@ -76,12 +78,13 @@ class CellVID:
 
   def render(self):
     for i, frame in enumerate(os.listdir(self.frames_path)):
-      if i == len(os.listdir(self.frames_path))-1:
-        return
-      while threading.activeCount() > self.max_threads:
-        pass
-      print(f"Rendering frame{i}.png...")
-      threading.Thread(target=self.render_frame, args=[i, self.size], daemon=True).start()
+      if i >= self.start_count:
+        if i == len(os.listdir(self.frames_path))-1:
+          return
+        while threading.activeCount() > self.max_threads:
+          pass
+        print(f"Rendering frame{i}.png...")
+        threading.Thread(target=self.render_frame, args=[i, self.size], daemon=True).start()
 
   def main(self):
     self.make_frames()
@@ -120,6 +123,8 @@ if __name__ == "__main__":
     cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
   elif len(sys.argv) == 6:
     cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
+  elif len(sys.argv) == 7:
+    cellvid = CellVID(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]), int(sys.argv[6]))
   else:
     print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0>")
     exit()
