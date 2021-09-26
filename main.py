@@ -9,7 +9,7 @@ import cv2
 
 class CellVID:
   def __init__(self, video_path, framerate=0, size=128, maxThreads=10, count=0, start_count=0):
-    self.start_count
+    self.start_count = start_count
     
     self.path = os.path.dirname(os.path.realpath(__file__))
 
@@ -128,5 +128,5 @@ if __name__ == "__main__":
   else:
     print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0> <start_count=0>")
     exit()
-  time.sleep(10 + 0.3*(os.listdir(cellvid.out_path))
+  time.sleep(10)
   cellvid.make_video()
