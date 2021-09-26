@@ -5,8 +5,6 @@ import os
 import sys
 import cv2
 
-# python3 main.py <video> <framerate> <size>
-
 class CellVID:
   def __init__(self, video_path, framerate=0, size=128, maxThreads=10, count=0, start_count=0):
     self.start_count = start_count
@@ -89,6 +87,8 @@ class CellVID:
   def main(self):
     self.make_frames()
     self.render()
+    time.sleep(10)
+    self.make_video()
 
   def sort_images(self):
     li = []
@@ -128,5 +128,4 @@ if __name__ == "__main__":
   else:
     print("python3 main.py <video> <framerate=0> <size=128> <maxthreads=10> <count=0> <start_count=0>")
     exit()
-  time.sleep(10)
-  cellvid.make_video()
+  # time.sleep(10)
