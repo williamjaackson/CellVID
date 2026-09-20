@@ -1,27 +1,22 @@
 # CellVID
-## Installation
-### Step 1
-Clone Repository to local device.
-`git clone https://github.com/itskegnh/CellVid`
 
-### Step 2
-Navigate to the directory
-`cd CellVid/`
+Turn video frames into mosaics made from Cell Machine sprites, then stitch them back into a video.
 
-### Step 3
-Install requirements
-`pip install -r requirements.txt`
+| Bad Apple                                                                                                   | Waffle falls over                                                                                                |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [![Bad Apple rendered with CellVID](docs/media/bad-apple.jpg)](https://www.youtube.com/watch?v=GOGt6hSMo48) | [![Waffle falls over rendered with CellVID](docs/media/waffle.jpg)](https://www.youtube.com/watch?v=v7EoLHy85lQ) |
 
-### Step 4
-Run python file. (set \<video\> to the file path of your input.)
-`python3 main.py <video>`
+Click a preview to watch the demo.
 
-## Crediting
-If you intent on using CellVID publicly (youtube and other media) credit it as so:
+## Usage
+
+The original script uses legacy Python/Pillow APIs. Install the dependencies in `requirements.txt` in a compatible environment, then:
+
+```sh
+mkdir -p frames out
+python3 main.py input.mp4
 ```
------
-CellVID, by itskegnh#9344
-Github: https://github.com/itskegnh/CellVID
-CellVID is a tool that lets you import videos into cell machine.
------
-```
+
+Output: `output.mp4`. Optional arguments control frame rate, render size and threads.
+
+Built by [William Jackson](https://github.com/williamjaackson), originally released as **itskegnh**. Please credit CellVID and link this repository when sharing its output.
