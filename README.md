@@ -18,5 +18,3 @@ python3 main.py input.mp4
 ```
 
 Output: `output.mp4`. Optional arguments control frame rate, render size and threads.
-
-Built by [William Jackson](https://github.com/williamjaackson), originally released as **itskegnh**. Please credit CellVID and link this repository when sharing its output.
